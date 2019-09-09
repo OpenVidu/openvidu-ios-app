@@ -66,8 +66,13 @@ class PeersManager: NSObject {
             localOfferParams["audioActive"] = "true"
             localOfferParams["videoActive"] = "true"
             localOfferParams["doLoopback"] = "false"
+            localOfferParams["hasAudio"] = "true"
+            localOfferParams["hasVideo"] = "true"
+
             localOfferParams["frameRate"] = "30"
             localOfferParams["typeOfVideo"] = "CAMERA"
+            localOfferParams["videoDimensions"] = "{\"width\":640,\"height\":480}"
+
             localOfferParams["sdpOffer"] = sessionDescription!.sdp
             if (self.webSocketListener!.id) > 1 {
                 self.webSocketListener!.sendJson(method: "publishVideo", params: localOfferParams)

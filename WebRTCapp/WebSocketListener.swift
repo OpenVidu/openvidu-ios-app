@@ -29,7 +29,7 @@ class WebSocketListener: WebSocketDelegate {
     var token: String
     var views: [UIView]!
     var names: [UILabel]!
-    
+	
     init(url: String, sessionName: String, participantName: String, peersManager: PeersManager, token: String, views: [UIView], names: [UILabel]) {
         self.url = url
         self.sessionName = sessionName
@@ -52,7 +52,8 @@ class WebSocketListener: WebSocketDelegate {
         pingMessageHandler()
         var joinRoomParams: [String: String] = [:]
         joinRoomParams["recorder"] = "false"
-        joinRoomParams[JSONConstants.Metadata] = "{\"clientData\": \"" + participantName + "\"}"
+        joinRoomParams["platform"] = "iOS"
+        joinRoomParams[JSONConstants.Metadata] = "{\"clientData\": \"" + "iOSUser" + "\"}"
         joinRoomParams["secret"] = "MY_SECRET"
         joinRoomParams["session"] = sessionName
         joinRoomParams["token"] = token
@@ -82,25 +83,23 @@ class WebSocketListener: WebSocketDelegate {
         print("Recieved message: " + text)
         let data = text.data(using: .utf8)!
         do {
-            if let json = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? [String: Any]
-            {
-                if json[JSONConstants.Result] != nil {
-                    handleResult(json: json)
-                } else {
-                    handleMethod(json: json)
-                }
+            let json: [String: Any] = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as! [String : Any]
+            
+            if json[JSONConstants.Result] != nil {
+                handleResult(json: json)
             } else {
-                print("bad json")
+                handleMethod(json: json)
             }
+            
         } catch let error as NSError {
-            print(error)
+            print("ERROR parsing JSON: ", error)
         }
     }
     
     func handleResult(json: [String: Any]) {
         let result: [String: Any] = json[JSONConstants.Result] as! [String: Any]
         if result[JSONConstants.SdpAnswer] != nil {
-            saveAnwer(json: result)
+            saveAnswer(json: result)
         } else if result[JSONConstants.SessionId] != nil {
             if result[JSONConstants.Value] != nil {
                 let value = result[JSONConstants.Value]  as! [[String:Any]]
@@ -155,7 +154,7 @@ class WebSocketListener: WebSocketDelegate {
         }
     }
 
-    func saveAnwer(json: [String:Any]) {
+    func saveAnswer(json: [String:Any]) {
         let sessionDescription = RTCSessionDescription(type: RTCSdpType.answer, sdp: json["sdpAnswer"] as! String)
         if localPeer == nil {
             self.localPeer = self.peersManager.localPeer
@@ -210,7 +209,7 @@ class WebSocketListener: WebSocketDelegate {
                 case JSONConstants.ParticipantLeft:
                     participantLeft(params: params)
             default:
-                print("Error")
+                print("Error handleMethod, " + "method '" + method + "' is not implemented")
             }
         }
     }
@@ -263,27 +262,32 @@ class WebSocketListener: WebSocketDelegate {
     }
     
     func participantLeft(params: Dictionary<String, Any>) {
-        let participantId = params["name"] as! String
+        print("participants", participants)
+        print("params", params)
+        let participantId = params["connectionId"] as! String
         participants[participantId]!.peerConnection!.close()
 
         //REMOVE VIEW
         #if arch(arm64)
-            let renderer = RTCMTLVideoView(frame:  self.views[self.participants.count-1].frame)
+            let renderer = RTCMTLVideoView(frame:  self.views[0].frame)
         #else
             let renderer = RTCEAGLVideoView(frame:  self.views[self.participants.count-1].frame)
         #endif
         
-        let videoTrack = self.peersManager.remoteStreams[self.participants.count-1].videoTracks[0]
+        let videoTrack = self.peersManager.remoteStreams[0].videoTracks[0]
         videoTrack.remove(renderer)
-        self.views[(participants[participantId]?.index)!].willRemoveSubview(renderer)
-        self.names[(participants[participantId]?.index)!].text = ""
-        self.names[(participants[participantId]?.index)!].backgroundColor = UIColor.clear
+		if let index = self.participants.keys.index(of: participantId) {
+			let i = participants.distance(from: participants.startIndex, to: index)
+			self.views[i].willRemoveSubview(renderer)
+			self.names[i].text = ""
+			self.names[i].backgroundColor = UIColor.clear
+		}
         participants.removeValue(forKey: participantId)
     }
     
     func saveIceCandidate(json: Dictionary<String, Any>, endPointName: String?) {
         let iceCandidate = RTCIceCandidate(sdp: json["candidate"] as! String, sdpMLineIndex: json["sdpMLineIndex"] as! Int32, sdpMid: json["sdpMid"] as? String)
-        if (endPointName == nil) {
+        if (endPointName == nil || participants[endPointName!] == nil) {
             self.localPeer = self.peersManager.localPeer
             self.localPeer!.add(iceCandidate)
         } else {
@@ -315,7 +319,9 @@ class WebSocketListener: WebSocketDelegate {
     
     func embedView(_ view: UIView, into containerView: UIView) {
         containerView.addSubview(view)
-        containerView.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+        containerView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+		
+
         view.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
         view.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
     }

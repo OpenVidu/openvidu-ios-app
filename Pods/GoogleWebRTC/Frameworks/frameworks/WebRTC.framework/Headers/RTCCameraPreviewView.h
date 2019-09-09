@@ -11,20 +11,20 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import <WebRTC/RTCMacros.h>
+#import "RTCMacros.h"
 
 @class AVCaptureSession;
 
 /** RTCCameraPreviewView is a view that renders local video from an
  *  AVCaptureSession.
  */
-RTC_EXPORT
+RTC_OBJC_EXPORT
 @interface RTCCameraPreviewView : UIView
 
 /** The capture session being rendered in the view. Capture session
  *  is assigned to AVCaptureVideoPreviewLayer async in the same
  *  queue that the AVCaptureSession is started/stopped.
  */
-@property(nonatomic, strong) AVCaptureSession *captureSession;
+@property(nonatomic, strong) AVCaptureSession* captureSession;
 
 @end

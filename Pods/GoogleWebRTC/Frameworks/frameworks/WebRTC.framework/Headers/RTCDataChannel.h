@@ -11,11 +11,11 @@
 #import <AvailabilityMacros.h>
 #import <Foundation/Foundation.h>
 
-#import <WebRTC/RTCMacros.h>
+#import "RTCMacros.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-RTC_EXPORT
+RTC_OBJC_EXPORT
 @interface RTCDataBuffer : NSObject
 
 /** NSData representation of the underlying buffer. */
@@ -34,9 +34,8 @@ RTC_EXPORT
 
 @end
 
-
 @class RTCDataChannel;
-RTC_EXPORT
+RTC_OBJC_EXPORT
 @protocol RTCDataChannelDelegate <NSObject>
 
 /** The data channel state changed. */
@@ -48,11 +47,9 @@ RTC_EXPORT
 
 @optional
 /** The data channel's |bufferedAmount| changed. */
-- (void)dataChannel:(RTCDataChannel *)dataChannel
-    didChangeBufferedAmount:(uint64_t)amount;
+- (void)dataChannel:(RTCDataChannel *)dataChannel didChangeBufferedAmount:(uint64_t)amount;
 
 @end
-
 
 /** Represents the state of the data channel. */
 typedef NS_ENUM(NSInteger, RTCDataChannelState) {
@@ -62,7 +59,7 @@ typedef NS_ENUM(NSInteger, RTCDataChannelState) {
   RTCDataChannelStateClosed,
 };
 
-RTC_EXPORT
+RTC_OBJC_EXPORT
 @interface RTCDataChannel : NSObject
 
 /**
@@ -78,8 +75,7 @@ RTC_EXPORT
 @property(nonatomic, readonly) BOOL isOrdered;
 
 /** Deprecated. Use maxPacketLifeTime. */
-@property(nonatomic, readonly) NSUInteger maxRetransmitTime
-    DEPRECATED_ATTRIBUTE;
+@property(nonatomic, readonly) NSUInteger maxRetransmitTime DEPRECATED_ATTRIBUTE;
 
 /**
  * The length of the time window (in milliseconds) during which transmissions

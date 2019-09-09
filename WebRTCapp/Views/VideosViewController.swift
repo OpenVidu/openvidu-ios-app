@@ -64,13 +64,13 @@ class VideosViewController: UIViewController {
     }
     
     func start() {
-        if self.url == "https://demos.openvidu.io:4443/openvidu" {
-            let url = URL(string: "https://demos.openvidu.io:4443/api/sessions")!
+		if self.url == "https://192.168.0.106:4443/openvidu" {
+			let url = URL(string: "https://192.168.0.106:4443/api/sessions")!
             var request = URLRequest(url: url)
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.addValue("Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU", forHTTPHeaderField: "Authorization")
             request.httpMethod = "POST"
-            let json = "{\"customSessionId\": \"SessionB\"}"
+            let json = "{\"customSessionId\": \"SessionA\"}"
             request.httpBody = json.data(using: .utf8)
             var responseString = ""
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -94,7 +94,7 @@ class VideosViewController: UIViewController {
                     print(error)
                 }
                 // Get Token
-                let url = URL(string: "https://demos.openvidu.io:4443/api/tokens")!
+				let url = URL(string: "https://192.168.0.106:4443/api/tokens")!
                 var request = URLRequest(url: url)
                 request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
                 request.addValue("Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU", forHTTPHeaderField: "Authorization")
@@ -121,7 +121,7 @@ class VideosViewController: UIViewController {
                             print("response someKey exists")
                             token = jsonArray?["token"] as! String
                         } else {
-                            token = "wss://demos.openvidu.io:4443?sessionId=SessionA&token=6m6xfsbfvme5rhek"
+							token = "wss://192.168.0.106:4443?sessionId=SessionA&token=6m6xfsbfvme5rhek"
                         }
                     } catch let error as NSError {
                         print(error)
@@ -225,8 +225,8 @@ class VideosViewController: UIViewController {
     func embedView(_ view: UIView, into containerView: UIView) {
         containerView.addSubview(view)
         view.translatesAutoresizingMaskIntoConstraints = false
-        let width = (UIScreen.main.bounds.width)
-        let height = (UIScreen.main.bounds.height)
+        let width = (UIScreen.main.bounds.width / 2)
+        let height = (UIScreen.main.bounds.height / 2)
         containerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[view(" + width.description + ")]",
                                                                     options: NSLayoutFormatOptions(),
                                                                     metrics: nil,

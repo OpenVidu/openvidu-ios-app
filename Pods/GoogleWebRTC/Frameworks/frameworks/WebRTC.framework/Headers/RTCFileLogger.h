@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <WebRTC/RTCMacros.h>
+#import "RTCMacros.h"
 
 typedef NS_ENUM(NSUInteger, RTCFileLoggerSeverity) {
   RTCFileLoggerSeverityVerbose,
@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 // are preserved while the middle section is overwritten instead.
 // For kRTCFileLoggerTypeApp, the oldest log is overwritten.
 // This class is not threadsafe.
-RTC_EXPORT
+RTC_OBJC_EXPORT
 @interface RTCFileLogger : NSObject
 
 // The severity level to capture. The default is kRTCFileLoggerSeverityInfo.
@@ -52,13 +52,11 @@ RTC_EXPORT
 - (instancetype)init;
 
 // Create file logger with default rotation type.
-- (instancetype)initWithDirPath:(NSString *)dirPath
-                    maxFileSize:(NSUInteger)maxFileSize;
+- (instancetype)initWithDirPath:(NSString *)dirPath maxFileSize:(NSUInteger)maxFileSize;
 
 - (instancetype)initWithDirPath:(NSString *)dirPath
                     maxFileSize:(NSUInteger)maxFileSize
-                   rotationType:(RTCFileLoggerRotationType)rotationType
-    NS_DESIGNATED_INITIALIZER;
+                   rotationType:(RTCFileLoggerRotationType)rotationType NS_DESIGNATED_INITIALIZER;
 
 // Starts writing WebRTC logs to disk if not already started. Overwrites any
 // existing file(s).
@@ -74,4 +72,3 @@ RTC_EXPORT
 @end
 
 NS_ASSUME_NONNULL_END
-

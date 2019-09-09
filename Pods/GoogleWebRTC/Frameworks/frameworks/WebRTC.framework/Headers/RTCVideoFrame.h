@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
 
-#import <WebRTC/RTCMacros.h>
+#import "RTCMacros.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, RTCVideoRotation) {
 @protocol RTCVideoFrameBuffer;
 
 // RTCVideoFrame is an ObjectiveC version of webrtc::VideoFrame.
-RTC_EXPORT
+RTC_OBJC_EXPORT
 @interface RTCVideoFrame : NSObject
 
 /** Width without rotation applied. */
@@ -44,7 +44,7 @@ RTC_EXPORT
 @property(nonatomic, readonly) id<RTCVideoFrameBuffer> buffer;
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)new NS_UNAVAILABLE;
+- (instancetype) new NS_UNAVAILABLE;
 
 /** Initialize an RTCVideoFrame from a pixel buffer, rotation, and timestamp.
  *  Deprecated - initialize with a RTCCVPixelBuffer instead

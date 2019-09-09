@@ -10,7 +10,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import <WebRTC/RTCMacros.h>
+#import "RTCCertificate.h"
+#import "RTCCryptoOptions.h"
+#import "RTCMacros.h"
 
 @class RTCIceServer;
 @class RTCIntervalRange;
@@ -34,10 +36,7 @@ typedef NS_ENUM(NSInteger, RTCBundlePolicy) {
 };
 
 /** Represents the rtcp mux policy. */
-typedef NS_ENUM(NSInteger, RTCRtcpMuxPolicy) {
-  RTCRtcpMuxPolicyNegotiate,
-  RTCRtcpMuxPolicyRequire
-};
+typedef NS_ENUM(NSInteger, RTCRtcpMuxPolicy) { RTCRtcpMuxPolicyNegotiate, RTCRtcpMuxPolicyRequire };
 
 /** Represents the tcp candidate policy. */
 typedef NS_ENUM(NSInteger, RTCTcpCandidatePolicy) {
@@ -65,18 +64,20 @@ typedef NS_ENUM(NSInteger, RTCEncryptionKeyType) {
 
 /** Represents the chosen SDP semantics for the RTCPeerConnection. */
 typedef NS_ENUM(NSInteger, RTCSdpSemantics) {
-  RTCSdpSemanticsDefault,
   RTCSdpSemanticsPlanB,
   RTCSdpSemanticsUnifiedPlan,
 };
 
 NS_ASSUME_NONNULL_BEGIN
 
-RTC_EXPORT
+RTC_OBJC_EXPORT
 @interface RTCConfiguration : NSObject
 
 /** An array of Ice Servers available to be used by ICE. */
 @property(nonatomic, copy) NSArray<RTCIceServer *> *iceServers;
+
+/** An RTCCertificate for 're' use. */
+@property(nonatomic, nullable) RTCCertificate *certificate;
 
 /** Which candidates the ICE agent is allowed to use. The W3C calls it
  * |iceTransportPolicy|, while in C++ it is called |type|. */
@@ -89,8 +90,20 @@ RTC_EXPORT
 @property(nonatomic, assign) RTCRtcpMuxPolicy rtcpMuxPolicy;
 @property(nonatomic, assign) RTCTcpCandidatePolicy tcpCandidatePolicy;
 @property(nonatomic, assign) RTCCandidateNetworkPolicy candidateNetworkPolicy;
-@property(nonatomic, assign)
-    RTCContinualGatheringPolicy continualGatheringPolicy;
+@property(nonatomic, assign) RTCContinualGatheringPolicy continualGatheringPolicy;
+
+/** If set to YES, don't gather IPv6 ICE candidates.
+ *  Default is NO.
+ */
+@property(nonatomic, assign) BOOL disableIPV6;
+
+/** If set to YES, don't gather IPv6 ICE candidates on Wi-Fi.
+ *  Only intended to be used on specific devices. Certain phones disable IPv6
+ *  when the screen is turned off and it would be better to just disable the
+ *  IPv6 ICE candidates on Wi-Fi in those cases.
+ *  Default is NO.
+ */
+@property(nonatomic, assign) BOOL disableIPV6OnWiFi;
 
 /** By default, the PeerConnection will use a limited number of IPv6 network
  *  interfaces, in order to avoid too many ICE candidate pairs being created
@@ -127,6 +140,18 @@ RTC_EXPORT
  */
 @property(nonatomic, assign) BOOL shouldPresumeWritableWhenFullyRelayed;
 
+/* This flag is only effective when |continualGatheringPolicy| is
+ * RTCContinualGatheringPolicyGatherContinually.
+ *
+ * If YES, after the ICE transport type is changed such that new types of
+ * ICE candidates are allowed by the new transport type, e.g. from
+ * RTCIceTransportPolicyRelay to RTCIceTransportPolicyAll, candidates that
+ * have been gathered by the ICE transport but not matching the previous
+ * transport type and as a result not observed by PeerConnectionDelegateAdapter,
+ * will be surfaced to the delegate.
+ */
+@property(nonatomic, assign) BOOL shouldSurfaceIceCandidatesOnIceTransportTypeChanged;
+
 /** If set to non-nil, controls the minimal interval between consecutive ICE
  *  check packets.
  */
@@ -155,16 +180,48 @@ RTC_EXPORT
  *  will also cause RTCPeerConnection to ignore all but the first a=ssrc lines
  *  that form a Plan B stream.
  *
- *  For users who only send at most one audio and one video track, this
- *  choice does not matter and should be left as Default.
- *
  *  For users who wish to send multiple audio/video streams and need to stay
- *  interoperable with legacy WebRTC implementations, specify PlanB.
+ *  interoperable with legacy WebRTC implementations or use legacy APIs,
+ *  specify PlanB.
  *
- *  For users who wish to send multiple audio/video streams and/or wish to
- *  use the new RTCRtpTransceiver API, specify UnifiedPlan.
+ *  For all other users, specify UnifiedPlan.
  */
 @property(nonatomic, assign) RTCSdpSemantics sdpSemantics;
+
+/** Actively reset the SRTP parameters when the DTLS transports underneath are
+ *  changed after offer/answer negotiation. This is only intended to be a
+ *  workaround for crbug.com/835958
+ */
+@property(nonatomic, assign) BOOL activeResetSrtpParams;
+
+/**
+ * If MediaTransportFactory is provided in PeerConnectionFactory, this flag informs PeerConnection
+ * that it should use the MediaTransportInterface.
+ */
+@property(nonatomic, assign) BOOL useMediaTransport;
+
+/**
+ * If MediaTransportFactory is provided in PeerConnectionFactory, this flag informs PeerConnection
+ * that it should use the MediaTransportInterface for data channels.
+ */
+@property(nonatomic, assign) BOOL useMediaTransportForDataChannels;
+
+/**
+ * Defines advanced optional cryptographic settings related to SRTP and
+ * frame encryption for native WebRTC. Setting this will overwrite any
+ * options set through the PeerConnectionFactory (which is deprecated).
+ */
+@property(nonatomic, nullable) RTCCryptoOptions *cryptoOptions;
+
+/**
+ * Time interval between audio RTCP reports.
+ */
+@property(nonatomic, assign) int rtcpAudioReportIntervalMs;
+
+/**
+ * Time interval between video RTCP reports.
+ */
+@property(nonatomic, assign) int rtcpVideoReportIntervalMs;
 
 - (instancetype)init;
 
