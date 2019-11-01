@@ -1,4 +1,7 @@
-# WebRTCiOS
+> **IMPORTANT NOTE**: This project has **important bugs** and can not be used as base to build your own native iOS application. It is in our roadmap to fix bugs, but without any due date. 
+> If you want to implement an iOS application for OpenVidu, please use ionic: https://openvidu.io/docs/tutorials/openvidu-ionic/
+
+# OpenVidu Native iOS Sample Application
 ![Technologies](GitHubImages/technologies.png)
 WebRTCapp is a small elaboration that is part of my final degree project. This app aims to be a small video conference app created using mainly WebRTC technology. 
 With it, you can make calls though a web socket connection. 
