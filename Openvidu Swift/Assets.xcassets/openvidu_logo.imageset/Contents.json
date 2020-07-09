@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "openvidu_white_bg_transp.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "openvidu_white_bg_transp-1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "openvidu_white_bg_transp-2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
