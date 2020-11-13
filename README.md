@@ -1,5 +1,5 @@
 > **IMPORTANT NOTE**: This project has **important bugs** and can not be used as base to build your own native iOS application. It is in our roadmap to fix bugs, but without any due date. 
-> If you want to implement an iOS application for OpenVidu, please use ionic: https://openvidu.io/docs/tutorials/openvidu-ionic/
+> We have developed a new iOS sample from scratch. Contact us through commercial@openvidu.io or pro.support@openvidu.io to get it.
 
 # OpenVidu Native iOS Sample Application
 ![Technologies](GitHubImages/technologies.png)
