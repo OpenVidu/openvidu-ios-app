@@ -1,5 +1,6 @@
-> **IMPORTANT NOTE**: This project has **important bugs** and can not be used as base to build your own native iOS application. It is in our roadmap to fix bugs, but without any due date. 
-> We have developed a new iOS sample from scratch. Contact us through commercial@openvidu.io or pro.support@openvidu.io to get it.
+> **IMPORTANT NOTE**: This project has **important bugs** and can not be used as base to build your own native OpenVidu iOS application. OpenVidu team doesn't provide any kind of help or guidance for this codebase. It is maintained just for reference. 
+> 
+> OpenVidu team have developed a new OpenVidu iOS sample application from scratch **without bugs**. It is not open source. Can be acquired with a commercial license. You can find more information about this sample application in the [official tutorials page](https://docs.openvidu.io/en/2.16.0/tutorials/openvidu-ios/). 
 
 # OpenVidu Native iOS Sample Application
 ![Technologies](GitHubImages/technologies.png)
