@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Openvidu_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="openvidu_background" translatesAutoresizingMaskIntoConstraints="NO" id="Oce-Fk-7PZ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="openvidu_logo" translatesAutoresizingMaskIntoConstraints="NO" id="47D-fI-hkI">
+                                <rect key="frame" x="0.0" y="64" width="414" height="269"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Fu-ex-vsc">
+                                <rect key="frame" x="40" y="373" width="334" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="Jp5-HW-mLQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIj-ur-4LP">
+                                <rect key="frame" x="40" y="341" width="78.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zKS-Mz-4oH">
+                                <rect key="frame" x="40" y="453" width="334" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="gFr-zi-3XC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Session Id" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="guy-ph-RzS">
+                                <rect key="frame" x="40" y="421" width="79" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C43-do-swA">
+                                <rect key="frame" x="339" y="507" width="35" height="33"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="Join">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ajv-rN-PgR"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="7Fu-ex-vsc" firstAttribute="trailing" secondItem="47D-fI-hkI" secondAttribute="trailing" constant="-40" id="04U-ls-OB8"/>
+                            <constraint firstItem="47D-fI-hkI" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.3" id="0EK-0c-HTZ"/>
+                            <constraint firstItem="zKS-Mz-4oH" firstAttribute="leading" secondItem="7Fu-ex-vsc" secondAttribute="leading" id="1Mz-Im-Bw8"/>
+                            <constraint firstItem="C43-do-swA" firstAttribute="top" secondItem="zKS-Mz-4oH" secondAttribute="bottom" constant="20" id="3lf-Af-NgI"/>
+                            <constraint firstItem="zKS-Mz-4oH" firstAttribute="trailing" secondItem="7Fu-ex-vsc" secondAttribute="trailing" id="67S-wZ-1C1"/>
+                            <constraint firstItem="7Fu-ex-vsc" firstAttribute="top" secondItem="kIj-ur-4LP" secondAttribute="bottom" constant="11" id="8mM-49-JbQ"/>
+                            <constraint firstItem="Oce-Fk-7PZ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="A72-Op-5cb"/>
+                            <constraint firstAttribute="bottom" secondItem="Oce-Fk-7PZ" secondAttribute="bottom" id="DyE-b4-HQH"/>
+                            <constraint firstItem="zKS-Mz-4oH" firstAttribute="top" secondItem="guy-ph-RzS" secondAttribute="bottom" constant="11" id="GjP-Lj-yKx"/>
+                            <constraint firstItem="Oce-Fk-7PZ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="JYq-MW-Uz7"/>
+                            <constraint firstItem="guy-ph-RzS" firstAttribute="top" secondItem="7Fu-ex-vsc" secondAttribute="bottom" constant="14" id="MJf-X9-C3T"/>
+                            <constraint firstItem="47D-fI-hkI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="W9H-hS-pJi"/>
+                            <constraint firstItem="7Fu-ex-vsc" firstAttribute="leading" secondItem="47D-fI-hkI" secondAttribute="leading" constant="40" id="XHm-Gr-q6d"/>
+                            <constraint firstItem="kIj-ur-4LP" firstAttribute="top" secondItem="47D-fI-hkI" secondAttribute="bottom" constant="8" id="aX6-Cm-r32"/>
+                            <constraint firstItem="guy-ph-RzS" firstAttribute="leading" secondItem="zKS-Mz-4oH" secondAttribute="leading" id="cK8-2c-UEG"/>
+                            <constraint firstItem="Oce-Fk-7PZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="fZ9-34-LTd"/>
+                            <constraint firstItem="kIj-ur-4LP" firstAttribute="leading" secondItem="7Fu-ex-vsc" secondAttribute="leading" id="gjz-Le-fAt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="47D-fI-hkI" secondAttribute="trailing" id="mCb-xH-Tk4"/>
+                            <constraint firstItem="C43-do-swA" firstAttribute="trailing" secondItem="zKS-Mz-4oH" secondAttribute="trailing" id="uO7-gm-Lvo"/>
+                            <constraint firstItem="47D-fI-hkI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="wL3-oF-Grz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="sessionIdTextField" destination="zKS-Mz-4oH" id="jcc-sL-UEH"/>
+                        <outlet property="usernameTextField" destination="7Fu-ex-vsc" id="7ee-ub-DDr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="138.61607142857142"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="openvidu_background" width="1024" height="613"/>
+        <image name="openvidu_logo" width="1497" height="807"/>
+    </resources>
+</document>
